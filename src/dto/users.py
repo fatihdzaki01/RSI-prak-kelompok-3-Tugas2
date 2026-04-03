@@ -1,0 +1,27 @@
+from datetime import datetime
+from pydantic import BaseModel, field_validator, model_validator, ConfigDict
+
+
+class UserCreate(BaseModel):
+    first_name: str
+    last_name: str
+    whatsapp: str
+
+    @field_validator("whatsapp")
+    def validate_whatsapp(cls, v):
+        if not v.isdigit():
+            raise ValueError("Nomor whatsapp harus angka")
+        if len(v) < 10:
+            raise ValueError("Nomor whatsapp tidak valid")
+        return v
+
+
+class UserResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    first_name: str
+    last_name: str
+    whatsapp: str
+    created_at: datetime
+    updated_at: datetime
