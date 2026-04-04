@@ -1,24 +1,19 @@
 from fastapi import APIRouter
-from src.controllers import users
 
-router = APIRouter(prefix="/events", tags=["Events"])
+from src.controllers.users import (
+    create_user,
+    delete_user,
+    get_user,
+    get_users,
+    update_user,
+)
 
-@router.get("/")
-def get_events():
-    return users.get_events()
+from src.dto.users import UserResponse 
+router = APIRouter(prefix="/users", tags=["Users"])
 
-@router.get("/{user_id}")
-def get_event(user_id: int):
-    return users.get_event(user_id)
 
-@router.post("/")
-def create_event():
-    return users.create_event()
-
-@router.put("/{user_id}")
-def update_event(user_id: int):
-    return users.update_event(user_id)
-
-@router.delete("/{user_id}")
-def delete_event(user_id: int):
-    return users.delete_event(user_id)
+router.get("/", response_model=list[UserResponse])(get_users)
+router.get("/{user_id}", response_model=UserResponse)(get_user)
+router.post("/", response_model=UserResponse)(create_user)
+router.put("/{user_id}", response_model=UserResponse)(update_user)
+router.delete("/{user_id}")(delete_user)

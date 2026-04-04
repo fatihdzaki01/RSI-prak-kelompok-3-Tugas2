@@ -13,7 +13,7 @@ class User(SQLModel, table=True):
     created_at: datetime = None
     updated_at: datetime = None
 
-    accounts: list["Account"] = Relationship(back_populates="user")
-    registrations: list["Registration"] = Relationship(back_populates="user")
+   # accounts: list["Account"] = Relationship(back_populates="user") --> nanti kalau udh ada punya angel
+    #registrations: list["Registration"] = Relationship(back_populates="user")
 
 

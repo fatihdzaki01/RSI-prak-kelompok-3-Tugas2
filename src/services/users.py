@@ -13,8 +13,9 @@ class UsersService:
     def create_user(self, db, user):
         return self.repo.create(db, user)
 
-    def update_user(self, db, user):
-        return self.repo.update(db, user)
+    def update_user(self, db, user_id, user):
+        return self.repo.update(db, user_id, user)
 
-    def delete_user(self, db, user):
+    def delete_user(self, db, user_id):
+        user = self.repo.get_by_id(db, user_id)  
         return self.repo.delete(db, user)

@@ -10,12 +10,13 @@ class UsersRepository:
     def get_by_id(self, db: Session, user_id: int):
         return db.get(User, user_id)
 
-    def create(self, db: Session, user: User):
-        db.add(user)
+    def create(self, db, user):
+        db_user = User(**user.dict())  # convert di sini
+        db.add(db_user)
         db.commit()
-        db.refresh(user)
-        return user
-
+        db.refresh(db_user)
+        return db_user
+    
     def update(self, db: Session, user: User):
         db.add(user)
         db.commit()
