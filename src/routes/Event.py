@@ -11,8 +11,8 @@ from src.controller.Event import (
 router = APIRouter(prefix="/events", tags=["Events"])
 
 
-router.get("/")(get_event)
-router.get("/{event_id}")(get_events)
+router.get("/")(get_events)
+router.get("/{event_id}")(get_event)
 router.post("/")(create_event)
 router.put("/{event_id}")(update_event)
 router.delete("/{event_id}")(delete_event)
