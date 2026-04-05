@@ -1,14 +1,13 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 
 
 class UserCreate(BaseModel):
     first_name: str
-    last_name: str
+    last_name: Optional[str] = None
     whatsapp: str
-    created_at: datetime
-    updated_at: datetime
 
     @field_validator("whatsapp")
     def validate_whatsapp(cls, v):
@@ -24,7 +23,7 @@ class UserResponse(BaseModel):
 
     id: int
     first_name: str
-    last_name: str
-    whatsapp: str
+    last_name: Optional[str] = None
+    whatsapp: Optional[str] = None
     created_at: datetime
     updated_at: datetime
