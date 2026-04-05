@@ -4,8 +4,7 @@ from src.services.Role import RoleService
 from src.database.connection import get_session
 from src.dto.Role import RoleCreate
 
-print(RoleService)
-print(type(RoleService))
+
 service = RoleService()
 
 

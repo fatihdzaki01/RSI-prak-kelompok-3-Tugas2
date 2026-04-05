@@ -13,8 +13,11 @@ class RoleService:
         return self.repo.get_all(db)
 
     def get_role(self, db: Session, role_id: int):
-        return self.repo.get_by_id(db, role_id)
-
+        role = self.repo.get_by_id(db, role_id)
+        if not role:
+            raise ValueError("role tidak ditemukan")
+        return role
+    
     def create_role(self, db: Session, data):
         role = Role(
             **data.dict()
@@ -24,7 +27,7 @@ class RoleService:
     def update_role(self, db: Session, role_id: int, data):
         role = self.repo.get_by_id(db, role_id)
         if not role:
-            return None
+            raise ValueError("role tidak ditemukan")
 
         role.name = data.name
 
@@ -33,7 +36,7 @@ class RoleService:
     def delete_role(self, db: Session, role_id: int):
         role = self.repo.get_by_id(db, role_id)
         if not role:
-            return None
+            raise ValueError("role tidak ditemukan")
 
         self.repo.delete(db, role)
         return role
