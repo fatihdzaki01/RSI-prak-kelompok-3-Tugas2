@@ -9,12 +9,12 @@ class Event(SQLModel, table=True):
 
     id: int = Field(default=None, primary_key=True)
 
-    name: str = None
-    description: str = None
-    quota: int = None
+    name: str
+    description: Optional[str] = None
+    quota: int
 
-    started_at: datetime = None
-    ended_at: datetime = None
+    started_at: datetime
+    ended_at: datetime
 
     created_at: datetime = None
     updated_at: datetime = None
