@@ -1,6 +1,15 @@
 from fastapi import APIRouter
 from src.controller import Role
 
+from src.controller.Role import (
+    create_role,
+    delete_role,
+    get_role,
+    get_roles,
+    update_role,
+)
+from src.dto.Role import RoleResponse
+
 router = APIRouter(prefix="/roles", tags=["Roles"])
 
 
