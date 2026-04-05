@@ -15,7 +15,7 @@ class UsersService:
     def get_user(self, db, user_id):
         user = self.repo.get_by_id(db, user_id)
         if not user:
-            raise ValueError("User tidak ditemukan")
+            raise ValueError("user tidak ditemukan")
         return user
 
     def create_user(self, db, user):
@@ -27,7 +27,7 @@ class UsersService:
     def update_user(self, db, user_id, user):
         existing = self.repo.get_by_id(db, user_id)
         if not existing:
-            raise ValueError("User tidak ditemukan")
+            raise ValueError("user tidak ditemukan")
 
         # buat merge, jadi kalau update kan jarang yak diupdate semua, nah kalau cuman di update salah satu aja,
         # itu yang lain bakal kosong. jadi untuk mengantisipasi itu dibuatlah validasi ini
@@ -42,7 +42,7 @@ class UsersService:
 
         # update timestamp
         existing.updated_at = datetime.utcnow()
-        return self.repo.update(db, user_id, existing)
+        return self.repo.update(db, existing)
 
     def delete_user(self, db, user_id):
         user = self.repo.get_by_id(db, user_id)

@@ -29,3 +29,7 @@ class RegistrationRepository:
     def count_by_event(self, db: Session, event_id: int):
         statement = select(Registration).where(Registration.event_id == event_id)
         return len(db.exec(statement).all())
+
+    def count_by_user(self, db: Session, user_id: int):
+        statement = select(Registration).where(Registration.user_id == user_id)
+        return len(db.exec(statement).all())
