@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres-rsi
+    restart: always
+
+    environment:
+      POSTGRES_USER: postgres-rsi
+      POSTGRES_PASSWORD: 4321
+      POSTGRES_DB: rsi_db_tugas2
+
+    ports:
+      - "5435:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres-rsi"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
