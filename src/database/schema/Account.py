@@ -1,16 +1,26 @@
-from sqlmodel import SQLModel, Field, Relationship
-from typing import Optional
 from datetime import datetime
+from typing import Optional
+
+from sqlmodel import Field, Relationship, SQLModel
+
+from src.database.schema.Role import Role
+from src.database.schema.User import User
 
 
 class Account(SQLModel, table=True):
     __tablename__ = "accounts"
 
-    id: Optional[int] = Field(default=None, primary_key=True)
-    username: str
+    id: int = Field(default=None, primary_key=True)
+
+    user_id: int = Field(foreign_key="users.id")
+    role_id: int = Field(foreign_key="roles.id")
+
     email: str
+    username: str = Field(default=None, max_length=16)
     password: str
 
-    role_id: Optional[int] = Field(default=None, foreign_key="roles.id")
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime = Field(default_factory=datetime.now)
 
-    role: Optional["Role"] = Relationship(back_populates="accounts")
+    user: Optional[User] = Relationship(back_populates="accounts")
+    role: Optional[Role] = Relationship(back_populates="accounts")
