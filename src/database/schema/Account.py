@@ -19,8 +19,8 @@ class Account(SQLModel, table=True):
     username: str = Field(default=None, max_length=16)
     password: str
 
-    created_at: datetime = None
-    updated_at: datetime = None
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime = Field(default_factory=datetime.now)
 
     user: Optional[User] = Relationship(back_populates="accounts")
     role: Optional[Role] = Relationship(back_populates="accounts")

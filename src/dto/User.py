@@ -8,6 +8,8 @@ class UserCreate(BaseModel):
     first_name: str
     last_name: Optional[str] = None
     whatsapp: str
+    created_at: datetime
+    updated_at: datetime
 
     @field_validator("whatsapp")
     def validate_whatsapp(cls, v):
