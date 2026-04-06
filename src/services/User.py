@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from src.repositories.Registration import RegistrationRepository
-from src.repositories.users import UsersRepository
 from src.repositories.Account import AccountRepository
+from src.repositories.Registration import RegistrationRepository
+from src.repositories.User import UsersRepository
 
 
 class UsersService:
@@ -43,7 +43,7 @@ class UsersService:
 
         # update timestamp
         existing.updated_at = datetime.utcnow()
-        return self.repo.update(db, user_id, existing)
+        return self.repo.update(db, existing)
 
     def delete_user(self, db, user_id):
         user = self.repo.get_by_id(db, user_id)
@@ -54,7 +54,7 @@ class UsersService:
         total = self.registration_repo.count_by_user(db, user_id)
         if total > 0:
             raise ValueError("user tidak dihapus karena masih terdaftar di registrasi")
-        
+
         account_repo = AccountRepository()
         account = account_repo.get_by_user_id(db, user_id)
         if account:
