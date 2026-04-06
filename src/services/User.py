@@ -2,6 +2,7 @@ from datetime import datetime
 
 from src.repositories.Registration import RegistrationRepository
 from src.repositories.users import UsersRepository
+from src.repositories.Account import AccountRepository
 
 
 class UsersService:
@@ -15,7 +16,7 @@ class UsersService:
     def get_user(self, db, user_id):
         user = self.repo.get_by_id(db, user_id)
         if not user:
-            raise ValueError("user tidak ditemukan")
+            raise ValueError("User tidak ditemukan")
         return user
 
     def create_user(self, db, user):
@@ -27,7 +28,7 @@ class UsersService:
     def update_user(self, db, user_id, user):
         existing = self.repo.get_by_id(db, user_id)
         if not existing:
-            raise ValueError("user tidak ditemukan")
+            raise ValueError("User tidak ditemukan")
 
         # buat merge, jadi kalau update kan jarang yak diupdate semua, nah kalau cuman di update salah satu aja,
         # itu yang lain bakal kosong. jadi untuk mengantisipasi itu dibuatlah validasi ini
@@ -42,7 +43,7 @@ class UsersService:
 
         # update timestamp
         existing.updated_at = datetime.utcnow()
-        return self.repo.update(db, existing)
+        return self.repo.update(db, user_id, existing)
 
     def delete_user(self, db, user_id):
         user = self.repo.get_by_id(db, user_id)
@@ -53,4 +54,10 @@ class UsersService:
         total = self.registration_repo.count_by_user(db, user_id)
         if total > 0:
             raise ValueError("user tidak dihapus karena masih terdaftar di registrasi")
+        
+        account_repo = AccountRepository()
+        account = account_repo.get_by_user_id(db, user_id)
+        if account:
+            raise ValueError("user tidak dapat dihapus karena masih memiliki account")
+
         return self.repo.delete(db, user)

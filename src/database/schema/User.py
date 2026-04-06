@@ -1,9 +1,12 @@
 from datetime import datetime
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 from sqlmodel import Field, Relationship, SQLModel
 
 from src.database.schema.Registration import Registration
+
+if TYPE_CHECKING:
+    from src.database.schema.Account import Account
 
 
 class User(SQLModel, table=True):
@@ -16,6 +19,4 @@ class User(SQLModel, table=True):
     created_at: datetime = None
     updated_at: datetime = None
     registrations: list["Registration"] = Relationship(back_populates="user")
-
-
-# accounts: list["Account"] = Relationship(back_populates="user") --> nanti kalau udh ada punya angel
+    accounts: list["Account"] = Relationship(back_populates="user")
