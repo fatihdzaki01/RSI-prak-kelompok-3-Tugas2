@@ -1,9 +1,9 @@
 from sqlmodel import Session, select
+
 from src.database.schema.Account import Account
 
 
 class AccountRepository:
-
     def get_all(self, db: Session):
         return db.exec(select(Account)).all()
 
@@ -25,3 +25,7 @@ class AccountRepository:
     def delete(self, db: Session, account: Account):
         db.delete(account)
         db.commit()
+
+    def get_by_user_id(self, db: Session, user_id: int):
+        statement = select(Account).where(Account.user_id == user_id)
+        return db.exec(statement).first()
