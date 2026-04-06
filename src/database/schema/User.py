@@ -3,10 +3,9 @@ from typing import TYPE_CHECKING, Optional
 
 from sqlmodel import Field, Relationship, SQLModel
 
-from src.database.schema.Registration import Registration
-
 if TYPE_CHECKING:
     from src.database.schema.Account import Account
+    from src.database.schema.Registration import Registration
 
 
 class User(SQLModel, table=True):

@@ -1,8 +1,10 @@
 from datetime import datetime
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
+from sqlalchemy import Column, SmallInteger
 from sqlmodel import Field, Relationship, SQLModel
-
+if TYPE_CHECKING:
+    from src.database.schema.Registration import Registration
 
 class Event(SQLModel, table=True):
     __tablename__ = "events"
@@ -11,7 +13,7 @@ class Event(SQLModel, table=True):
 
     name: str
     description: Optional[str] = None
-    quota: int
+    quota: int = Field(sa_column=Column(SmallInteger))
 
     started_at: datetime
     ended_at: datetime
